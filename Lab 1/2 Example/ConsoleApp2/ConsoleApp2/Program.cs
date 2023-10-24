@@ -40,7 +40,7 @@ namespace Project
 
                 Console.WriteLine("Calculated value of PI SUM: {0}", sum_PI);
 
-                Console.WriteLine("Calculated value of PI SUM: {0}", sum_Ln2);
+                Console.WriteLine("Calculated value of LN2 SUM: {0}", sum_Ln2);
 
             }
             catch (Exception e)
@@ -89,6 +89,7 @@ namespace Project
                 sum += term;
                 n++;
                 term = (n % 2 == 0) ? -1 / n : 1 / n;
+                
             }
 
             return sum;

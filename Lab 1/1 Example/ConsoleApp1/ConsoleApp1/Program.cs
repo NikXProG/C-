@@ -1,5 +1,5 @@
 ﻿
-/*
+
 namespace Project1
 {
     using System;
@@ -19,7 +19,7 @@ namespace Project1
                 {
                     int i1 = i;
                     int i2 = -i;
-                    Console.WriteLine(i1);
+                    Console.WriteLine(i2);
                     if  ((Math.Pow(i1, 3) + (B * Math.Pow(i1, 2)) + (A * C * i1) + free_const) == 0)
                     {
                         // Коэффициенты делимого полинома: 2x^3 - 11x^2 + 12x + 9
@@ -27,27 +27,6 @@ namespace Project1
 
                         // Коэффициенты делителя: x + 1/2
                         double[] divisorCoefficients = {i1 / 2, 1 };
-
-                        int dividendDegree = dividendCoefficients.Length - 1;
-                        int divisorDegree = divisorCoefficients.Length - 1;
-
-                        // Создаем массив для хранения коэффициентов частного
-                        double[] quotientCoefficients = new double[dividendDegree - divisorDegree + 1];
-
-                        // Выполняем долгое деление
-                        for (int q = 0; q < quotientCoefficients.Length; q++)
-                        {
-                            quotientCoefficients[i] = dividendCoefficients[q] / divisorCoefficients[0];
-
-                            for (int j = 0; j <= divisorDegree; j++)
-                            {
-                                dividendCoefficients[q + j] -= quotientCoefficients[q] * divisorCoefficients[j];
-                            }
-                        }
-
-                        Console.WriteLine("Результат деления: ");
-                        Console.WriteLine("Частное: " + string.Join(" ", quotientCoefficients));
-                        Console.WriteLine("Остаток: " + string.Join(" ", dividendCoefficients));
                     }
 
                     if ( (Math.Pow(i2, 3) + (B * Math.Pow(i2, 2)) + (A * C * i2) + free_const) == 0)
@@ -58,48 +37,27 @@ namespace Project1
                         // Коэффициенты делителя: x + 1/2
                         double[] divisorCoefficients = { i2 / 2, 1 };
 
-                        int dividendDegree = dividendCoefficients.Length - 1;
-                        int divisorDegree = divisorCoefficients.Length - 1;
-
-                        // Создаем массив для хранения коэффициентов частного
-                        double[] quotientCoefficients = new double[dividendDegree - divisorDegree + 1];
-
-                        // Выполняем долгое деление
-                        for (int q = 0; q < quotientCoefficients.Length; q++)
-                        {
-                            quotientCoefficients[q] = dividendCoefficients[q] / divisorCoefficients[0];
-
-                            for (int j = 0; j <= divisorDegree; j++)
-                            {
-                                dividendCoefficients[q + j] -= quotientCoefficients[q] * divisorCoefficients[j];
-                            }
-                        }
-
-                        Console.WriteLine("Результат деления: ");
-                        Console.WriteLine("Частное: " + string.Join(" ", quotientCoefficients));
-                        Console.WriteLine("Остаток: " + string.Join(" ", dividendCoefficients));
                     }
                 }
             }
         }
 
     }
-}*/
-namespace Project1
+}
+/*using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace num1
 {
     class Program
     {
-        public struct Result
-        {
-            public int tip;
-            public double p1;
-            public double p2;
-            public double p3;
-        }
-        public static Result Kardano(double a, double b, double c, double d)
-        {
-            Result result = new Result();
 
+        private static void Kardano(double a, double b, double c, double d, ref int type, ref double p1, ref double p2, ref double p3)
+        {
             double eps = 1E-14;
             double p = (3 * a * c - b * b) / (3 * a * a);
             double q = (2 * b * b * b - 9 * a * b * c + 27 * a * a * d) / (27 * a * a * a);
@@ -108,57 +66,82 @@ namespace Project1
                 det = 0;
             if (det > 0)
             {
-                result.tip = 1; // один вещественный, два комплексных корня
+                type = 1;
                 double u = -q / 2 + Math.Sqrt(det);
                 u = Math.Exp(Math.Log(u) / 3);
                 double yy = u - p / (3 * u);
-                result.p1 = yy - b / (3 * a); // первый корень
-                result.p2 = -(u - p / (3 * u)) / 2 - b / (3 * a);
-                result.p3 = Math.Sqrt(3) / 2 * (u + p / (3 * u));
+
+                p1 = yy - b / (3 * a);
+                p2 = -(u - p / (3 * u)) / 2 - b / (3 * a);
+                p3 = Math.Sqrt(3) / 2 * (u + p / (3 * u));
             }
             else
             {
                 if (det < 0)
                 {
-                    result.tip = 2; // три вещественных корня
+                    type = 2;
                     double fi;
-                    if (Math.Abs(q) < eps) // q=0
+                    if (Math.Abs(q) < eps)
                         fi = Math.PI / 2;
                     else
                     {
-                        if (q < 0) // q<0
+                        if (q < 0)
                             fi = Math.Atan(Math.Sqrt(-det) / (-q / 2));
-                        else // q<0
+                        else
                             fi = Math.Atan(Math.Sqrt(-det) / (-q / 2)) + Math.PI;
                     }
                     double r = 2 * Math.Sqrt(-p / 3);
-                    result.p1 = r * Math.Cos(fi / 3) - b / (3 * a);
-                    result.p2 = r * Math.Cos((fi + 2 * Math.PI) / 3) - b / (3 * a);
-                    result.p3 = r * Math.Cos((fi + 4 * Math.PI) / 3) - b / (3 * a);
+                    p1 = r * Math.Cos(fi / 3) - b / (3 * a);
+                    p2 = r * Math.Cos((fi + 2 * Math.PI) / 3) - b / (3 * a);
+                    p3 = r * Math.Cos((fi + 4 * Math.PI) / 3) - b / (3 * a);
                 }
-                else // det=0
+
+                else if (det == 0)
                 {
                     if (Math.Abs(q) < eps)
                     {
-                        result.tip = 4; // 3-х кратный 
-                        result.p1 = -b / (3 * a); // 3-х кратный 
-                        result.p2 = -b / (3 * a);
-                        result.p3 = -b / (3 * a);
+                        type = 4;
+                        p1 = -b / (3 * a);
+                        p2 = -b / (3 * a);
+                        p3 = -b / (3 * a);
                     }
                     else
                     {
-                        result.tip = 3; // один и два кратных
+                        type = 3;
                         double u = Math.Exp(Math.Log(Math.Abs(q) / 2) / 3);
                         if (q < 0)
                             u = -u;
-                        result.p1 = -2 * u - b / (3 * a);
-                        result.p2 = u - b / (3 * a);
-                        result.p3 = u - b / (3 * a);
+                        p1 = -2 * u - b / (3 * a);
+                        p2 = u - b / (3 * a);
+                        p3 = u - b / (3 * a);
                     }
                 }
             }
-            return result;
         }
-    }
- 
 
+        static void Main(string[] args)
+        {
+
+            double a = 99.0;
+            double b = -28.4;
+            double c = 8.0;
+            double d = 0.0;
+
+            int variant = 0;
+
+            double p1 = 0, p2 = 0, p3 = 0;
+
+            Kardano(a, b, c, d, ref variant, ref p1, ref p2, ref p3);
+            if (variant == 1)
+                Console.WriteLine("Один вещественный и два комплексно сопряженных корня: root1={0} root2,3:{1}+-{2}i", p1, p2, p3);
+            else if (variant == 2)
+                Console.WriteLine("3 действительных корня: root1={0} root2={1} root3={2}", p1, p2, p3);
+            else if (variant == 3)
+                Console.WriteLine("3 вещественных корня, два из которых кратные: root1={0} root2,3={1}", p1, p2);
+            else if (variant == 4)
+                Console.WriteLine("3 кратных действительных корня: root1,2,3:{0}", p1);
+
+        }
+
+    }
+}*/
