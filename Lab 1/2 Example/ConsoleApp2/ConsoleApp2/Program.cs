@@ -32,11 +32,15 @@ namespace Project
 
                 double sum_PI = PIsum(epsilon);
 
+                double sum_Ln2= Ln2Sum(epsilon);
+
                 Console.WriteLine("Calculated value of e LIMIT: {0}", lim_e);
 
                 Console.WriteLine("Calculated value of e SUM: {0}", sum_e);
 
                 Console.WriteLine("Calculated value of PI SUM: {0}", sum_PI);
+
+                Console.WriteLine("Calculated value of PI SUM: {0}", sum_Ln2);
 
             }
             catch (Exception e)
@@ -74,6 +78,22 @@ namespace Project
         }
 
 
+        static double Ln2Sum(double epsilon)
+        {
+            double sum = 0; // Текущая сумма ряда
+            double term = 1; // Текущий член ряда
+            int n = 1; // Счетчик итераций
+
+            while (Math.Abs(term) > epsilon)
+            {
+                sum += term;
+                n++;
+                term = (n % 2 == 0) ? -1 / n : 1 / n;
+            }
+
+            return sum;
+        }
+
 
         public static double PIsum(double epsilon)
         {
@@ -84,6 +104,11 @@ namespace Project
             while (Math.Abs(term) >= epsilon)
             {
                 term = 1.0 / (2 * n + 1);
+                if (n % 2 == 1)
+                {
+                    term = -term;
+                }
+
                 pi += term;
                 n++;
             }
