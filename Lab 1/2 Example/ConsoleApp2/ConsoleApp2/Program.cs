@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -29,10 +30,13 @@ namespace Project
 
                 double sum_e = Esum(epsilon);
 
-                Console.WriteLine("Calculated value of e: {0}", lim_e);
+                double sum_PI = PIsum(epsilon);
 
-                Console.WriteLine("Calculated value of e: {0}", sum_e);
+                Console.WriteLine("Calculated value of e LIMIT: {0}", lim_e);
 
+                Console.WriteLine("Calculated value of e SUM: {0}", sum_e);
+
+                Console.WriteLine("Calculated value of PI SUM: {0}", sum_PI);
 
             }
             catch (Exception e)
@@ -64,84 +68,28 @@ namespace Project
                 term = 1f / n;
                 result += 1f / n;
                 n *= ++n;
-                Console.WriteLine(term);
             }
 
             return result;
         }
-        public static double PILim(double epsilon, int maxIterations)
-        {
-            double ePrevious = 0;
-            double eCurrent = 1;
 
-            for (int n = 1; n <= maxIterations && Math.Abs(eCurrent - ePrevious) > epsilon; n++)
-            {
-                ePrevious = eCurrent;
-                eCurrent = Math.Pow(1 + 1.0 / n, n);
-            }
 
-            return eCurrent;
-        }
+
         public static double PIsum(double epsilon)
         {
-            double term = 1; double result = 1;
-            ulong n = 1;
-
-            while (term > epsilon)
-            {
-                term = 1f / n;
-                result += 1f / n;
-                n *= ++n;
-                Console.WriteLine(term);
-            }
-
-            return result;
-        }
-
-        /*Console.Write("Enter const for sum E (no more than 20): ");
-        input = Console.ReadLine();
-        try
-        {
-            if (input == null)
-            {
-                throw new Exception("ERROR");
-            }
-
-
-            // Вторая часть по сумме.
-
-            double sum_e = 0;
+            double pi = 0;
+            int n = 0;
             double term = 1;
-            ulong n = 0;
-            epsilon = Convert.ToDouble(input);
-            while (term > epsilon)
+
+            while (Math.Abs(term) >= epsilon)
             {
-                term = 1f / n;
-                sum_e += 1f / n;
+                term = 1.0 / (2 * n + 1);
+                pi += term;
                 n++;
             }
 
-            Console.WriteLine("По сумме: {0}", sum_e);
-
+            return 4 * pi;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Произошла ошибка: {e.Message}");
-        }
-
-    }
-    public static ulong factorial(ulong n)
-    {
-        if (n > 20)
-        {
-            throw new ArgumentOutOfRangeException("n", "n should be less than or equal to 20.");
-        }
-        if (n == 0 || n == 1)
-        {
-            return 1;
-        }
-        return factorial(n - 1) * n;
-    }*/
     }
 
 }
