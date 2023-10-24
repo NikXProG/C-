@@ -104,7 +104,7 @@ namespace Project
                     {
                         return k;
                     }
-                    ++k;
+                    k++;
                 }
             }
             return k;

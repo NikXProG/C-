@@ -1,0 +1,14 @@
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\bin\Debug\net7.0\ConsoleApp3.exe
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\bin\Debug\net7.0\ConsoleApp3.deps.json
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\bin\Debug\net7.0\ConsoleApp3.runtimeconfig.json
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\bin\Debug\net7.0\ConsoleApp3.dll
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\bin\Debug\net7.0\ConsoleApp3.pdb
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ConsoleApp3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ConsoleApp3.AssemblyInfoInputs.cache
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ConsoleApp3.AssemblyInfo.cs
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ConsoleApp3.csproj.CoreCompileInputs.cache
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ConsoleApp3.dll
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\refint\ConsoleApp3.dll
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ConsoleApp3.pdb
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ConsoleApp3.genruntimeconfig.cache
+C:\Users\koi\Documents\GitHub\CSharp\Lab 1\3 Example\ConsoleApp3\ConsoleApp3\obj\Debug\net7.0\ref\ConsoleApp3.dll
