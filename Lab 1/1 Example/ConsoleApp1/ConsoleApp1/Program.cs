@@ -24,7 +24,7 @@ namespace variant
             double y1 = 0, y2 = 0, y3 = 0;
             double x1 = 0, x2 = 0, x3 = 0;
 
-            Kardano(a, b, c, d, ref variant, ref y1, ref y2, ref y3);
+            Kardano_metod(a, b, c, d, ref variant, ref y1, ref y2, ref y3);
             if (variant == 1)
                 Console.WriteLine("Один вещественный и два комплексно сопряженных корня: root1={0} root2,3:{1}+-{2}i", y1, y2, y3);
             else if (variant == 2)
@@ -69,92 +69,93 @@ namespace variant
 
                 }
             }
-            double a2 = A;
-            double b2 = x1 * a2 + B;
-            double c2 = x1 * b2 + C;
+            double b = x1 * A + B;
+            double c = x1 * b + C;
 
-            var discriminant = Math.Pow(b2, 2) - 4 * a2 * c2;
+            double disc = b * b - 4 * A * c;
 
 
-            if (discriminant < 0)
+            if (D < 0)
             {
                 x2 = double.NaN;
                 x3 = double.NaN;
             }
-            else if (discriminant == 0)
+            else if (disc == 0)
             {
-                 x2 = -b2 / (2 * a2);
+                 x2 = -b / (2 * A);
                  x3 = x2;
             }
             else
             {
-                 x2 = (-b2 + Math.Sqrt(discriminant)) / (2 * a2);
-                 x3 = (-b2 - Math.Sqrt(discriminant)) / (2 * a2);
+                 x2 = (-b + Math.Sqrt(disc) ) / (2 * A);
+                 x3 = (-b - Math.Sqrt(disc) ) / (2 * A);
             }
 
         }
-        private static void Kardano(double a, double b, double c, double d, ref int type, ref double p1, ref double p2, ref double p3)
+        private static void Kardano_metod(double coefficientA, double coefficientB, double coefficientC, double coefficientD,
+                                               ref int rootType, ref double root1, ref double root2, ref double root3)
         {
-            double eps = 1E-14;
-            double p = (3 * a * c - b * b) / (3 * a * a);
-            double q = (2 * b * b * b - 9 * a * b * c + 27 * a * a * d) / (27 * a * a * a);
-            double det = q * q / 4 + p * p * p / 27;
-            if (Math.Abs(det) < eps)
-                det = 0;
-            if (det > 0)
-            {
-                type = 1;
-                double u = -q / 2 + Math.Sqrt(det);
-                u = Math.Exp(Math.Log(u) / 3);
-                double yy = u - p / (3 * u);
+            const double epsilon = 1e-14;
+            double numeratorP = (3 * coefficientA * coefficientC - Math.Pow(coefficientB, 2)) / (3 * Math.Pow(coefficientA, 2));
+            double numeratorQ = (2 * Math.Pow(coefficientB, 3) - 9 * coefficientA * coefficientB * coefficientC
+                                 + 27 * Math.Pow(coefficientA, 2) * coefficientD) / (27 * Math.Pow(coefficientA, 3));
+            double disc = Math.Pow(numeratorQ, 2) / 4 + Math.Pow(numeratorP, 3) / 27;
 
-                p1 = yy - b / (3 * a);
-                p2 = -(u - p / (3 * u)) / 2 - b / (3 * a);
-                p3 = Math.Sqrt(3) / 2 * (u + p / (3 * u));
+            // Check for values close to zero
+            if (Math.Abs(disc) < epsilon)
+            {
+                disc = 0;
             }
-            else
-            {
-                if (det < 0)
-                {
-                    type = 2;
-                    double fi;
-                    if (Math.Abs(q) < eps)
-                        fi = Math.PI / 2;
-                    else
-                    {
-                        if (q < 0)
-                            fi = Math.Atan(Math.Sqrt(-det) / (-q / 2));
-                        else
-                            fi = Math.Atan(Math.Sqrt(-det) / (-q / 2)) + Math.PI;
-                    }
-                    double r = 2 * Math.Sqrt(-p / 3);
-                    p1 = r * Math.Cos(fi / 3) - b / (3 * a);
-                    p2 = r * Math.Cos((fi + 2 * Math.PI) / 3) - b / (3 * a);
-                    p3 = r * Math.Cos((fi + 4 * Math.PI) / 3) - b / (3 * a);
-                }
 
-                else if (det == 0)
+            if (disc > 0)
+            {
+                rootType = 1; // Real distinct root and 2 complex roots case
+
+                double rootCube = -numeratorQ / 2 + Math.Sqrt(disc);
+                rootCube = Math.Exp(Math.Log(rootCube) / 3);
+                double yy = rootCube - numeratorP / (3 * rootCube);
+
+                root1 = yy - coefficientB / (3 * coefficientA);
+                // Complex roots
+                root2 = -(rootCube - numeratorP / (3 * rootCube)) / 2 - coefficientB / (3 * coefficientA);
+                root3 = Math.Sqrt(3) / 2 * (rootCube + numeratorP / (3 * rootCube));
+            }
+            else if (disc < 0)
+            {
+                rootType = 2; // All real roots case
+
+                double fi;
+                if (Math.Abs(numeratorQ) < epsilon)
                 {
-                    if (Math.Abs(q) < eps)
-                    {
-                        type = 4;
-                        p1 = -b / (3 * a);
-                        p2 = -b / (3 * a);
-                        p3 = -b / (3 * a);
-                    }
-                    else
-                    {
-                        type = 3;
-                        double u = Math.Exp(Math.Log(Math.Abs(q) / 2) / 3);
-                        if (q < 0)
-                            u = -u;
-                        p1 = -2 * u - b / (3 * a);
-                        p2 = u - b / (3 * a);
-                        p3 = u - b / (3 * a);
-                    }
+                    fi = Math.PI / 2;
+                }
+                else
+                {
+                    fi = numeratorQ < 0 ? Math.Atan(Math.Sqrt(-disc) / (-numeratorQ / 2))
+                        : Math.Atan(Math.Sqrt(-disc) / (-numeratorQ / 2)) + Math.PI;
+                }
+                double r = 2 * Math.Sqrt(-numeratorP / 3);
+                root1 = r * Math.Cos(fi / 3) - coefficientB / (3 * coefficientA);
+                root2 = r * Math.Cos((fi + 2 * Math.PI) / 3) - coefficientB / (3 * coefficientA);
+                root3 = r * Math.Cos((fi + 4 * Math.PI) / 3) - coefficientB / (3 * coefficientA);
+            }
+            else // if (discriminant == 0)
+            {
+                if (Math.Abs(numeratorQ) < epsilon)
+                {
+                    rootType = 4; // All roots are the same
+                    root1 = root2 = root3 = -coefficientB / (3 * coefficientA);
+                }
+                else
+                {
+                    rootType = 3; // One single root and one positive negative pair
+                    double rootCube = Math.Exp(Math.Log(Math.Abs(numeratorQ) / 2) / 3);
+                    if (numeratorQ < 0)
+                        rootCube = -rootCube;
+                    root1 = -2 * rootCube - coefficientB / (3 * coefficientA);
+                    root2 = root3 = rootCube - coefficientB / (3 * coefficientA);
                 }
             }
         }
-
     }
 }
