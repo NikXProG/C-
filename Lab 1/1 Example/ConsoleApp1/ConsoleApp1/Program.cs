@@ -1,61 +1,98 @@
 ﻿
 
-namespace Project1
-{
-    using System;
-    using static System.Runtime.InteropServices.JavaScript.JSType;
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            double A = 2, B = -11, C = 12, D = 9 ;
-            double qad = Math.Pow(A, 2); // необходимо умножить все уравнение на A в квадрате для замены.
-
-            // Y3 + Y2 + Y * CA + D * A2 = 0 ищем теперь делители D * A2
-            double free_const = D * qad;
-            for (int i = 1; i <= free_const/2; i++)
-            {
-                if (free_const % i == 0)
-                {
-                    int i1 = i;
-                    int i2 = -i;
-                    Console.WriteLine(i2);
-                    if  ((Math.Pow(i1, 3) + (B * Math.Pow(i1, 2)) + (A * C * i1) + free_const) == 0)
-                    {
-                        // Коэффициенты делимого полинома: 2x^3 - 11x^2 + 12x + 9
-                        double[] dividendCoefficients = { 2, -11, 12, 9 };
-
-                        // Коэффициенты делителя: x + 1/2
-                        double[] divisorCoefficients = {i1 / 2, 1 };
-                    }
-
-                    if ( (Math.Pow(i2, 3) + (B * Math.Pow(i2, 2)) + (A * C * i2) + free_const) == 0)
-                    {
-                        // Коэффициенты делимого полинома: 2x^3 - 11x^2 + 12x + 9
-                        double[] dividendCoefficients = { 2, -11, 12, 9 };
-
-                        // Коэффициенты делителя: x + 1/2
-                        double[] divisorCoefficients = { i2 / 2, 1 };
-
-                    }
-                }
-            }
-        }
-
-    }
-}
-/*using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 
-namespace num1
+namespace variant
 {
     class Program
     {
+        static void Main(string[] args)
+        {
 
+            double a = 2;
+            double b = -11;
+            double c = 12;
+            double d = 9;
+
+            int variant = 0;
+
+            double y1 = 0, y2 = 0, y3 = 0;
+            double x1 = 0, x2 = 0, x3 = 0;
+
+            Kardano(a, b, c, d, ref variant, ref y1, ref y2, ref y3);
+            if (variant == 1)
+                Console.WriteLine("Один вещественный и два комплексно сопряженных корня: root1={0} root2,3:{1}+-{2}i", y1, y2, y3);
+            else if (variant == 2)
+                Console.WriteLine("3 действительных корня: root1={0} root2={1} root3={2}", y1, y2, y3);
+            else if (variant == 3)
+                Console.WriteLine("3 вещественных корня, два из которых кратные: root1={0} root2,3={1}", y1, y2);
+            else if (variant == 4)
+                Console.WriteLine("3 кратных действительных корня: root1,2,3:{0}", y1);
+
+            Classic_metod(a, b, c, d, ref x1,ref x2,ref x3);
+            Console.WriteLine("Корни: root1={0} root2 = {1} root3={2}", x1, x2, x3);
+        }
+
+    private static void Classic_metod(double A, double B, double C,double D, ref double x1,ref double x2, ref double x3)
+        {
+            double qad = Math.Pow(A, 2); // необходимо умножить все уравнение на A в квадрате для замены.
+
+            // Y3 + Y2 + Y * CA + D * A2 = 0 ищем теперь делители D * A2
+            double free_const = D * qad;
+            for (int i = 1; i <= free_const / 2; i++)
+            {
+                if (free_const % i == 0)
+                {
+                    int i1 = i;
+                    int i2 = -i;
+                    if ((Math.Pow(i1, 3) + (B * Math.Pow(i1, 2)) + (A * C * i1) + free_const) == 0)
+                    {
+
+                        // Коэффициенты делителя: x + 1/2
+                        x1 = i1 / 2;
+
+                    }
+                    else if ((Math.Pow(i2, 3) + (B * Math.Pow(i2, 2)) + (A * C * i2) + free_const) == 0)
+                    {
+
+
+                        // Коэффициенты делителя: x + 1/2
+                        x1 = i2 / 2;
+
+                    }
+
+
+                }
+            }
+            double a2 = A;
+            double b2 = x1 * a2 + B;
+            double c2 = x1 * b2 + C;
+
+            var discriminant = Math.Pow(b2, 2) - 4 * a2 * c2;
+
+
+            if (discriminant < 0)
+            {
+                x2 = double.NaN;
+                x3 = double.NaN;
+            }
+            else if (discriminant == 0)
+            {
+                 x2 = -b2 / (2 * a2);
+                 x3 = x2;
+            }
+            else
+            {
+                 x2 = (-b2 + Math.Sqrt(discriminant)) / (2 * a2);
+                 x3 = (-b2 - Math.Sqrt(discriminant)) / (2 * a2);
+            }
+
+        }
         private static void Kardano(double a, double b, double c, double d, ref int type, ref double p1, ref double p2, ref double p3)
         {
             double eps = 1E-14;
@@ -119,29 +156,5 @@ namespace num1
             }
         }
 
-        static void Main(string[] args)
-        {
-
-            double a = 99.0;
-            double b = -28.4;
-            double c = 8.0;
-            double d = 0.0;
-
-            int variant = 0;
-
-            double p1 = 0, p2 = 0, p3 = 0;
-
-            Kardano(a, b, c, d, ref variant, ref p1, ref p2, ref p3);
-            if (variant == 1)
-                Console.WriteLine("Один вещественный и два комплексно сопряженных корня: root1={0} root2,3:{1}+-{2}i", p1, p2, p3);
-            else if (variant == 2)
-                Console.WriteLine("3 действительных корня: root1={0} root2={1} root3={2}", p1, p2, p3);
-            else if (variant == 3)
-                Console.WriteLine("3 вещественных корня, два из которых кратные: root1={0} root2,3={1}", p1, p2);
-            else if (variant == 4)
-                Console.WriteLine("3 кратных действительных корня: root1,2,3:{0}", p1);
-
-        }
-
     }
-}*/
+}
