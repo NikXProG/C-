@@ -12,7 +12,7 @@ public class Program {
             middle = (lowerBound + upperBound) / 2;
             fMiddle = equation(middle);
 
-            if (fMiddle == 0 || (upperBound - lowerBound) / 2 < epsilon)
+            if (fMiddle == 0 || Math.Abs((upperBound - lowerBound) / 2) < epsilon)
             {
                 return middle;
             }
@@ -30,7 +30,7 @@ public class Program {
 
     public static void Main(string[] args)
     {
-        double root = FindRoot(x => x * x - 81, 0, 10, 0);
+        double root = FindRoot(x => x * x * x - 27, 0, 10, 0.00001);
         Console.WriteLine("Корень уравнения: " + root);
     }
 }

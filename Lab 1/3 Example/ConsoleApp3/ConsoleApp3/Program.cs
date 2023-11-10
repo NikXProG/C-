@@ -73,7 +73,7 @@ namespace NumericDataProcessing
             if (input == null) {
                 Console.WriteLine("NULL-ERROR: введена пустая строка");
             }
-            string[] numberStrings = input.Split(new char[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] numberStrings = input!.Split(new char[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             List<double> numbers = new List<double>();
 
             foreach (string numberString in numberStrings)
@@ -83,7 +83,7 @@ namespace NumericDataProcessing
                 {
                     numbers.Add(number);
                 }
-                else if (numberString == "done")
+                else if (string.CompareOrdinal(numberString, "done") == 0)
                 {
                     break;
                 }

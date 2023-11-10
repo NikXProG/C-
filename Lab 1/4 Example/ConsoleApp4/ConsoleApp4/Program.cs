@@ -6,8 +6,8 @@
         {
         static void Main(string[] args)
         {
-            decimal number = 128.323m;
-            int baseNumber = 16;
+            decimal number = 0.33333333333m;
+            int baseNumber = 3;
 
             string result = Convert(number, baseNumber);
             Console.WriteLine(result);

@@ -80,7 +80,7 @@ namespace variant
                 x2 = double.NaN;
                 x3 = double.NaN;
             }
-            else if (disc == 0)
+            else if ( disc == 0)
             {
                  x2 = -b / (2 * A);
                  x3 = x2;

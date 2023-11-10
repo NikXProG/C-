@@ -3,6 +3,7 @@ namespace Project
 {
     using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Security.Principal;
 
     class Program
@@ -19,7 +20,14 @@ namespace Project
                 Console.WriteLine("Вот ваше число слов  введеного вами слова: ");
                 Console.WriteLine(CountWord(input_string));
                 Console.WriteLine("Вот ваша новая строка с замененнными предпоследним словом: ");
-                Console.WriteLine(ReplaceWord(input_string));
+                try
+                {
+                    Console.WriteLine(ReplaceWord(input_string));
+                }
+                catch(NotSupportedException e)
+                {
+                    Console.WriteLine($"Error: {e.Message}");
+                }
                 Console.WriteLine("Вот выше найденное k-слово с заглавной буквой: ");
                 Console.WriteLine(SearchWord(input_string));
             }
@@ -72,20 +80,29 @@ namespace Project
         static string  ReplaceWord(string input)
         {
             string? word = Console.ReadLine();
-            string[] words = input.Split(); // разделяем строку на слова
+            string[] words = input.Split(" "); // разделяем строку на слова
             string result = "";
             foreach (string myString in words)
             {
-                if (myString.Length > 0){
-                    if (myString == words[words.Length - 2])
+                if (words.Length == 1)
+                {
+                    throw new NotSupportedException("Error:min length string = 2 ");
+                }
+                if (words.Length > 2)
+                {
+                    if (myString.Length > 0)
                     {
-                        result += word + " ";
-                    }
-                    else
-                    {
-                        result += myString + " ";
+                        if (myString == words[words.Length - 2])
+                        {
+                            result += word + " ";
+                        }
+                        else
+                        {
+                            result += myString + " ";
+                        }
                     }
                 }
+
             }
             return result;
 
