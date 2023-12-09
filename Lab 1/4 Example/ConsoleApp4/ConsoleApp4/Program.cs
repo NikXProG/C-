@@ -1,91 +1,96 @@
-﻿namespace Project
-{
-        using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-        class Program
-        {
+
+namespace Project
+{
+    class Program
+    {
         static void Main(string[] args)
         {
-            decimal number = 0.33333333333m;
-            int baseNumber = 3;
+            double num = 9.0 / 11;
+            int k = 10;
 
-            string result = Convert(number, baseNumber);
-            Console.WriteLine(result);
-        }
-        public static string Convert(decimal number, int baseNumber)
-        {
-            if (baseNumber < 2 || baseNumber > 36)
-            {
-                throw new ArgumentOutOfRangeException("baseNumber", "The base number should be in the range [2..36].");
-            }
-
-            long wholePart = (long)number;
-            decimal fractionalPart = number - wholePart;
-
-            string result = ConvertWholePart(wholePart, baseNumber);
-
-            if (fractionalPart > 0)
-            {
-                result += ".";
-                result += ConvertFractionalPart(fractionalPart, baseNumber);
-            }
-
-            return result;
-        }
-
-        private static string ConvertWholePart(long number, int baseNumber)
-        {
+            int IntPart = (int)num;
+            double FracPart = num - IntPart;
             string result = "";
+            string resultFrac = "";
 
-            while (number > 0)
+            while (IntPart > 0)
             {
-                long remainder = number % baseNumber;
-                result = GetDigitFromValue((int)remainder) + result;
-                number = number / baseNumber;
+                int digit = IntPart % k;
+                char c;
+                if (digit < 10)
+                {
+                    c = (char)(digit + '0');
+                }
+                else
+                {
+                    c = (char)(digit - 10 + 'A');
+                }
+                IntPart /= k;
+                result += c;
             }
 
-            return result;
-        }
+            result += ".";
 
-        private static string ConvertFractionalPart(decimal number, int baseNumber)
-        {
-            const int maxPrecision = 20; 
-
-            string result = "";
-            int precision = 0;
-            long wholePart = (long)number;
-            decimal fractionalPart = number - wholePart;
-            decimal epsilon = 1e-9m; 
-
-            while (fractionalPart > epsilon && precision < maxPrecision)
+            int iterations = 9;
+            int i = 0;
+            while (FracPart > 0 && i < iterations)
             {
-                fractionalPart *= baseNumber;
-                long digit = (long)fractionalPart;
-                result += GetDigitFromValue((int)digit);
-                fractionalPart -= digit;
-                precision++;
+                FracPart *= k;
+                int digit = (int)FracPart;
+
+                char c;
+                if (digit < 10)
+                {
+                    c = (char)(digit + '0');
+                }
+                else
+                {
+                    c = (char)(digit - 10 + 'A');
+                }
+                FracPart -= digit;
+                resultFrac += c;
+                i++;
+            }
+            int periodStart = -1, periodLength = 0;
+            for (int j = 1; j <= resultFrac.Length / 2; j++)
+            {
+                bool isPeriodic = true;
+                for (int l = 0; l < resultFrac.Length / 2; l++)
+                {
+                    if (resultFrac[l] == resultFrac[l + j])
+                    {
+                        for (int n = j; n < resultFrac.Length; n++)
+                        {
+                            if (resultFrac[n] != resultFrac[n - j])
+                            {
+                                isPeriodic = false;
+                                break;
+                            }
+                        }
+
+                        if (isPeriodic)
+                        {
+                            periodStart = l;
+                            periodLength = j;
+                            break;
+                        }
+                    }
+
+                }
+                if (periodStart >= 0)
+                {
+                    resultFrac = resultFrac.Substring(0, periodStart) + "(" + resultFrac.Substring(periodStart, periodLength) + ")";
+                }
             }
 
-            if (fractionalPart > epsilon)
-            {
-                int startIndex = result.IndexOf(result[result.Length - 1]);
-                string repeatingPart = result.Substring(startIndex);
-                result = result.Substring(0, startIndex) ;
-            }
-
-            return result;
-        }
-
-        private static char GetDigitFromValue(int value)
-        {
-            if (value < 10)
-            {
-                return (char)('0' + value);
-            }
-            else
-            {
-                return (char)('A' + value - 10);
-            }
+            result += resultFrac;
+            Console.WriteLine(result); 
         }
     }
 }

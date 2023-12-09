@@ -1,0 +1,14 @@
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\bin\Debug\net7.0\main.cs.exe
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\bin\Debug\net7.0\main.cs.deps.json
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\bin\Debug\net7.0\main.cs.runtimeconfig.json
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\bin\Debug\net7.0\main.cs.dll
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\bin\Debug\net7.0\main.cs.pdb
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\main.cs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\main.cs.AssemblyInfoInputs.cache
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\main.cs.AssemblyInfo.cs
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\main.cs.csproj.CoreCompileInputs.cache
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\main.cs.dll
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\refint\main.cs.dll
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\main.cs.pdb
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\main.cs.genruntimeconfig.cache
+C:\Users\koi\Documents\GitHub\CSharp\Lab 2\1 Example\main.cs\main.cs\obj\Debug\net7.0\ref\main.cs.dll
